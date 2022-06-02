@@ -17,14 +17,16 @@ const Player = styled.div`
   color: blue;
   font-size: 30px;
   margin: 40px;
-  font-weight: bold
+  font-weight: bold;
+  height: 40px;
 `;
 
 const Winner = styled.div`
   color: purple;
   font-size: 30px;
   margin: 40px;
-  font-weight: bold
+  font-weight: bold;
+  height: 40px;
 `;
 
 const Reset = styled.div`
@@ -61,17 +63,17 @@ function App() {
   const [winner, setWinner] = useState(null as unknown as string | null);
   const [player, setPlayer] = useState(X);
 
-  const togglePlayer = () => { player === X ? setPlayer(O) : setPlayer(X) };
-  const updateData = (rowId: number, elId: number) => { setData((p) => p.map((row, pRowId) => pRowId === rowId ? row.map((el, pElId) => pElId === elId ? player : el) : row)) };
+  const togglePlayer = () => { !winner && (player === X ? setPlayer(O) : setPlayer(X) )};
+  const updateData = (rowId: number, elId: number) => { !winner && setData((p) => p.map((row, pRowId) => pRowId === rowId ? row.map((el, pElId) => pElId === elId ? player : el) : row)) };
 
   useEffect(() => {setWinner(getWinner(player === X ? O : X, data))}, [data]);
 
   return (
     <GameContext.Provider value={{ player, togglePlayer, data, updateData }} >
-      <Player>Next player: {player}</Player>
+      <Player>{!winner && `Next player: ${player}`}</Player>
       <Wrapper>
         <Board />
-        <Winner>{winner && `${winner} has won!`}</Winner>
+        <Winner>{winner && `${winner} is the winner!`}</Winner>
         <Reset onClick={()=> {setData(defaultArray); setWinner(null); setPlayer(X)}}>Reset</Reset>
       </Wrapper>
     </GameContext.Provider>
