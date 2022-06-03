@@ -9,101 +9,101 @@ const getVertical = (arr: DefaultArray) => {
 
 // before transformation to 2 arrays of diagonals, we need to get indices for x and y axes for all the elements in those arrays
 
-const getDiagonalIndices1 = () => {
-    let tempArr = [];
+const getDiagonalIndices1 = (columnCount = 7, rowCount = 7) => {
+    let tempRow = [];
     const resultArr = [];
 
-    let rowMin = 0;
-    let rowMax = 0;
-    let columnMin = 0;
-    let columnMax = 0;
-    let x = rowMin;
-    let y = columnMax;
+    let minX = 0;
+    let maxX = 0;
+    let minY = 0;
+    let maxY = 0;
+    let x = minX;
+    let y = maxY;
 
-    while (rowMax <= 7 && columnMax <= 7) {
-        while (x >= rowMin && x <= rowMax && y >= columnMin && y <= columnMax) {
-            tempArr.push({ x, y });
+    while (maxX <= columnCount && maxY <= rowCount) {
+        while (x >= minX && x <= maxX && y >= minY && y <= maxY) {
+            tempRow.push({ x, y });
             x++;
             y--;
         }
 
-        resultArr.push(tempArr);
-        tempArr = [];
-        rowMax = x;
-        columnMax++;
-        x = rowMin;
-        y = columnMax;
+        resultArr.push(tempRow);
+        tempRow = [];
+        maxX = x;
+        maxY++;
+        x = minX;
+        y = maxY;
     }
 
-    rowMin = 1;
-    columnMin = 1;
-    rowMax = 7;
-    columnMax = 7;
-    x = rowMin;
-    y = columnMax;
+    minX = 1;
+    minY = 1;
+    maxX = columnCount;
+    maxY = rowCount;
+    x = minX;
+    y = maxY;
 
-    while (rowMin <= rowMax && columnMin <= columnMax) {
-        while (x >= rowMin && x <= rowMax && y >= columnMin && y <= columnMax) {
-            tempArr.push({ x, y });
+    while (minX <= maxX && minY <= maxY) {
+        while (x >= minX && x <= maxX && y >= minY && y <= maxY) {
+            tempRow.push({ x, y });
             x++;
             y--;
         }
-        resultArr.push(tempArr);
-        tempArr = [];
-        rowMin++;
-        columnMin++;
-        x = rowMin;
-        y = columnMax;
+        resultArr.push(tempRow);
+        tempRow = [];
+        minX++;
+        minY++;
+        x = minX;
+        y = maxY;
     }
 
     return resultArr;
 };
 
-const getDiagonalIndices2 = () => {
-    let tempArr = [];
+const getDiagonalIndices2 = (columnCount = 7, rowCount = 7) => {
+    let tempRow = [];
     const resultArr = [];
 
-    let rowMin = 0;
-    let rowMax = 0;
-    let columnMin = 7;
-    let columnMax = 7;
-    let x = rowMin;
-    let y = columnMax;
+    let minX = 0;
+    let maxX = 0;
+    let minY = rowCount;
+    let maxY = rowCount;
+    let x = minX;
+    let y = maxY;
 
-    while (rowMax <= 7 && columnMax <= 7 && rowMin >= 0 && columnMin >= 0) {
-        while (x >= rowMin && x <= rowMax && y >= columnMin && y <= columnMax) {
-            tempArr.push({ x, y });
+    while (maxX <= 7 && maxY <= 7 && minX >= 0 && minY >= 0) {
+        while (x >= minX && x <= maxX && y >= minY && y <= maxY) {
+            tempRow.push({ x, y });
             x++;
             y++;
         }
 
-        resultArr.push(tempArr);
-        tempArr = [];
-        rowMax = x;
-        columnMin--;
-        x = rowMin;
-        y = columnMin;
+        resultArr.push(tempRow);
+        tempRow = [];
+        maxX = x;
+        minY--;
+        x = minX;
+        y = minY;
     }
 
-    rowMin = 1;
-    columnMin = 0;
-    rowMax = 7;
-    columnMax = 6;
-    x = rowMin;
-    y = columnMin;
+    minX = 1;
+    minY = 0;
+    maxX = columnCount;
+    maxY = rowCount - 1;
+    x = minX;
+    y = minY;
 
-    while (rowMin <= rowMax && columnMin <= columnMax) {
-        while (x >= rowMin && x <= rowMax && y >= columnMin && y <= columnMax) {
-            tempArr.push({ x, y });
+    while (minX <= maxX && minY <= maxY) {
+        while (x >= minX && x <= maxX && y >= minY && y <= maxY) {
+            tempRow.push({ x, y });
             x++;
             y++;
         }
-        resultArr.push(tempArr);
-        tempArr = [];
-        rowMin++;
-        columnMax--;
-        x = rowMin;
-        y = columnMin;
+        resultArr.push(tempRow);
+        tempRow = [];
+        minX++;
+        maxY--;
+        x = minX;
+        y = minY;
     }
 
     return resultArr;
@@ -116,10 +116,10 @@ const getSymbol = (arr: DefaultArray, obj: { x: number, y: number }) => {
 
 const getDiagonals = (arr: DefaultArray, callbackFn: typeof getDiagonalIndices1) => {
     const indicesArr = callbackFn();
-    return indicesArr.map((row:any) => row.map((el:any) => getSymbol(arr, el)));
+    return indicesArr.map((row) => row.map((el) => getSymbol(arr, el)));
 }
 
-const doesWinningRowExist = (line: string[], player: string, winningMax: number = 5) => {
+const doesWinningRowExist = (line: string[], player: string, winningCount = 5) => {
     let count = 0;
     let maxCount = 0;
     line.map(el => {
@@ -131,7 +131,7 @@ const doesWinningRowExist = (line: string[], player: string, winningMax: number 
             count = 0;
         }
     })
-    return maxCount >= winningMax;
+    return maxCount >= winningCount;
 }
 
 // call previous function for all rows/columns in one direction
