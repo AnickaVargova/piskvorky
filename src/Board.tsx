@@ -5,9 +5,10 @@ import { Cell } from "./Cell";
 
 const StyledBoard = styled.div`
   display: grid;
-  grid-template-columns: repeat(8, 40px);
-  grid-template-rows: repeat(8, 40px);
+  grid-template-columns: repeat(${Number(process.env.REACT_APP_SIZE)}, 40px);
+  grid-template-rows: repeat(${Number(process.env.REACT_APP_SIZE)}, 40px);
   border: 1px solid black;
+  background: ${process.env.REACT_APP_BACKGROUND};
 `;
 
 

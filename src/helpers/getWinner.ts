@@ -9,7 +9,7 @@ const getVertical = (arr: DefaultArray) => {
 
 // before transformation to 2 arrays of diagonals, we need to get indices for x and y axes for all the elements in those arrays
 
-const getDiagonalIndices1 = (columnCount = 7, rowCount = 7) => {
+const getDiagonalIndices1 = (columnCount = Number(process.env.REACT_APP_SIZE)-1, rowCount = Number(process.env.REACT_APP_SIZE)-1) => {
     let tempRow = [];
     const resultArr = [];
 
@@ -59,7 +59,7 @@ const getDiagonalIndices1 = (columnCount = 7, rowCount = 7) => {
     return resultArr;
 };
 
-const getDiagonalIndices2 = (columnCount = 7, rowCount = 7) => {
+const getDiagonalIndices2 = (columnCount = Number(process.env.REACT_APP_SIZE)-1, rowCount = Number(process.env.REACT_APP_SIZE)-1) => {
     let tempRow = [];
     const resultArr = [];
 
@@ -70,7 +70,7 @@ const getDiagonalIndices2 = (columnCount = 7, rowCount = 7) => {
     let x = minX;
     let y = maxY;
 
-    while (maxX <= 7 && maxY <= 7 && minX >= 0 && minY >= 0) {
+    while (maxX <= Number(process.env.REACT_APP_SIZE)-1-1 && maxY <= Number(process.env.REACT_APP_SIZE)-1-1 && minX >= 0 && minY >= 0) {
         while (x >= minX && x <= maxX && y >= minY && y <= maxY) {
             tempRow.push({ x, y });
             x++;

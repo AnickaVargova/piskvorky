@@ -53,7 +53,7 @@ type GameContextType = {
 
 export const GameContext = React.createContext(null as unknown as GameContextType);
 
-const defaultArray = Array.from({ length: 8 }).map(el => Array.from({ length: 8 }).map(el => Empty));
+const defaultArray = Array.from({ length: Number(process.env.REACT_APP_SIZE) }).map(el => Array.from({ length: Number(process.env.REACT_APP_SIZE) }).map(el => Empty));
 
 export type DefaultArray = typeof defaultArray;
 
@@ -61,7 +61,7 @@ function App() {
 
   const [data, setData] = useState(defaultArray);
   const [winner, setWinner] = useState(null as unknown as string | null);
-  const [player, setPlayer] = useState(X);
+  const [player, setPlayer] = useState(process.env.REACT_APP_FIRST_PLAYER as string);
 
   const togglePlayer = () => { !winner && (player === X ? setPlayer(O) : setPlayer(X) )};
   const updateData = (rowId: number, elId: number) => { !winner && setData((p) => p.map((row, pRowId) => pRowId === rowId ? row.map((el, pElId) => pElId === elId ? player : el) : row)) };
