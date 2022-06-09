@@ -8,7 +8,10 @@ const StyledBoard = styled.div`
   grid-template-columns: repeat(${Number(process.env.REACT_APP_SIZE)}, 40px);
   grid-template-rows: repeat(${Number(process.env.REACT_APP_SIZE)}, 40px);
   border: 1px solid black;
-  background: ${process.env.REACT_APP_BACKGROUND};
+  
+  background: ${window.
+    //@ts-expect-error
+    background};
 `;
 
 

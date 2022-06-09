@@ -1,3 +1,3 @@
-docker build -f Dockerfile --build-arg player=O --build-arg background=\#00FF11 --build-arg size=8 -t piskvorky:4 .
+docker build -f Dockerfile -t piskvorky:4 .
 echo '--------'
-docker run -it -p 80:80 piskvorky:4
+docker run --mount type=bind,source="$(pwd)"/allConfigs/prod.js,target=/usr/share/nginx/html/config.js -it -p 80:80 piskvorky:4
