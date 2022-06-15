@@ -70,7 +70,7 @@ const getDiagonalIndices2 = (columnCount = Number(process.env.REACT_APP_SIZE)-1,
     let x = minX;
     let y = maxY;
 
-    while (maxX <= Number(process.env.REACT_APP_SIZE)-1-1 && maxY <= Number(process.env.REACT_APP_SIZE)-1-1 && minX >= 0 && minY >= 0) {
+    while (maxX <= columnCount && maxY <= rowCount && minX >= 0 && minY >= 0) {
         while (x >= minX && x <= maxX && y >= minY && y <= maxY) {
             tempRow.push({ x, y });
             x++;
